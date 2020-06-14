@@ -12,7 +12,8 @@ We have a simple tutorial [here](docs/tutorial.md), but here are some usage exam
 $ protopub build my-descriptor-set.bin                                        # build .proto files from current working directory into single descriptor set file using `protoc`
 $ protopub login docker.io                                                    # login into registry
 $ protopub push docker.io/freshapi/example:latest ./my-descriptor-set.bin     # push descriptor into registry
-$ protopub pull docker.io/freshapi/example:latest ./pulled-descriptor-set.bin # pull from registry 
+$ protopub inspect docker.io/freshapi/example:latest                          # get info about image
+$ protopub pull docker.io/freshapi/example:latest ./pulled-descriptor-set.bin # pull from registry
 ```
 
 That's it!
