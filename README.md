@@ -9,11 +9,20 @@ dynamic interactive documentation and dynamic request routing.
 We have a simple tutorial [here](docs/tutorial.md), but here are some usage examples:
 
 ```bash
-$ protopub build my-descriptor-set.bin                                        # build .proto files from current working directory into single descriptor set file using `protoc`
-$ protopub login docker.io                                                    # login into registry
-$ protopub push docker.io/freshapi/example:latest ./my-descriptor-set.bin     # push descriptor into registry
-$ protopub inspect docker.io/freshapi/example:latest                          # get info about image
-$ protopub pull docker.io/freshapi/example:latest ./pulled-descriptor-set.bin # pull from registry
+# build .proto files from current working directory into single descriptor set file using `protoc`
+$ protopub build my-descriptor-set.bin
+
+# login into registry
+$ protopub login docker.io
+
+# push descriptor into registry
+$ protopub push docker.io/freshapi/example:latest ./my-descriptor-set.bin
+
+# get info about image
+$ protopub inspect docker.io/freshapi/example:latest
+
+# pull from registry
+$ protopub pull docker.io/freshapi/example:latest ./pulled-descriptor-set.bin
 ```
 
 That's it!
