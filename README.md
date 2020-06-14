@@ -8,7 +8,7 @@ dynamic interactive documentation and dynamic request routing.
 
 We have a simple tutorial [here](docs/tutorial.md), but here are some usage examples:
 
-```bas
+```bash
 $ protopub build my-descriptor-set.bin                                        # build .proto files from current working directory into single descriptor set file using `protoc`
 $ protopub login docker.io                                                    # login into registry
 $ protopub push docker.io/freshapi/example:latest ./my-descriptor-set.bin     # push descriptor into registry
