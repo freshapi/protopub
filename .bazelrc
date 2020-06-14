@@ -1,5 +1,6 @@
 build --features=pure
-build --workspace_status_command="bash ci/status.sh"
+build --workspace_status_command="bash ./ci/status.sh"
+build --stamp
 
 build:linux --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
 build:windows --platforms=@io_bazel_rules_go//go/toolchain:windows_amd64
