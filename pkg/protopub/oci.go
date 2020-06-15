@@ -8,8 +8,10 @@ import (
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
+// FileFilter is used to filter proto files
 type FileFilter func(file *descriptorpb.FileDescriptorProto) bool
 
+// PrepareImage creates OCI image manifest which could be used to push image
 func PrepareImage(store *DescriptorStore, image *Image, filter FileFilter) (ocispec.Manifest, error) {
 	config, err := AddConfig(store, image)
 	if err != nil {
@@ -41,6 +43,7 @@ func PrepareImage(store *DescriptorStore, image *Image, filter FileFilter) (ocis
 	return manifest, nil
 }
 
+// AddFile adds proto file to the store and returns its descriptor
 func AddFile(store *DescriptorStore, file *descriptorpb.FileDescriptorProto) (ocispec.Descriptor, error) {
 	bytes, err := proto.Marshal(file)
 	if err != nil {
@@ -58,10 +61,12 @@ func AddFile(store *DescriptorStore, file *descriptorpb.FileDescriptorProto) (oc
 	return fileDesc, nil
 }
 
+// GetAnnotations returns image annotations
 func GetAnnotations(image *Image) map[string]string {
 	return make(map[string]string)
 }
 
+// AddConfig adds config to the store and returns its descriptor
 func AddConfig(store *DescriptorStore, image *Image) (ocispec.Descriptor, error) {
 	configBytes, err := schema.RenderConfig(image.Config)
 	if err != nil {

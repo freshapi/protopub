@@ -14,6 +14,7 @@ type pushOpts struct {
 	files []string
 }
 
+// NewPush creates `push` command
 func NewPush() *cobra.Command {
 	var opts pushOpts
 	push := cobra.Command{

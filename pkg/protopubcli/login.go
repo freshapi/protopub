@@ -27,6 +27,7 @@ type loginOpts struct {
 	insecure bool
 }
 
+// NewLogin creates `login` command
 func NewLogin() *cobra.Command {
 	var opts loginOpts
 	cmd := &cobra.Command{

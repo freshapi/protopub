@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+// BuildToFile asks `protoc` to build descriptor set into output.
+// basePath usually is a working directory
+// paths - which paths to use as '-I' option of compiler
+// output - output file path
 func BuildToFile(basePath string, paths []string, output string) error {
 	args := []string{
 		"--descriptor_set_out=" + output,

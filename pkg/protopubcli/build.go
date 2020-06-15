@@ -10,6 +10,7 @@ type buildOpts struct {
 	paths  []string
 }
 
+// NewBuild creates `build` command
 func NewBuild() *cobra.Command {
 	var opts buildOpts
 	inspect := cobra.Command{

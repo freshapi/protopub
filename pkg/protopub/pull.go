@@ -19,8 +19,9 @@ import (
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
-func PullToFile(ctx context.Context, statusW io.Writer, resolver remotes.Resolver, imageRef string, path string, files ...string) error {
-	desc, err := PullImage(ctx, statusW, resolver, imageRef, files...)
+// PullToFile pulls given `imageRef` to file `path`
+func PullToFile(ctx context.Context, statusW io.Writer, resolver remotes.Resolver, imageRef string, path string) error {
+	desc, err := PullImage(ctx, statusW, resolver, imageRef)
 	if err != nil {
 		return err
 	}
@@ -47,7 +48,8 @@ func PullToFile(ctx context.Context, statusW io.Writer, resolver remotes.Resolve
 	return nil
 }
 
-func PullImage(ctx context.Context, statusW io.Writer, resolver remotes.Resolver, imageRef string, files ...string) (*Image, error) {
+// PullImage pulls given `imageRef` and creates an `Image`
+func PullImage(ctx context.Context, statusW io.Writer, resolver remotes.Resolver, imageRef string) (*Image, error) {
 	store := NewDescriptorStore()
 	var opts []oras.PullOpt
 	opts = append(opts, oras.WithPullCallbackHandler(pullStatusTrack(statusW)))

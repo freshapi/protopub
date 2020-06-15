@@ -11,9 +11,9 @@ type pullOpts struct {
 	resolverOpts
 	image string
 	file  string
-	files []string
 }
 
+// NewPull creates `pull` command
 func NewPull() *cobra.Command {
 	var opts pullOpts
 	push := cobra.Command{
@@ -36,14 +36,13 @@ Example - pull descriptor from private registry without logging in first:
 	}
 	flags := push.Flags()
 	opts.resolverOpts = resolverOptions(flags)
-	flags.StringArrayVarP(&opts.files, "files", "f", []string{}, ".proto file names from FileDescriptorSet to pull")
 
 	return &push
 }
 
 func runPull(opts *pullOpts) error {
 	resolver := Resolver(opts.resolverOpts)
-	err := protopub.PullToFile(context.Background(), os.Stdout, resolver, opts.image, opts.file, opts.files...)
+	err := protopub.PullToFile(context.Background(), os.Stdout, resolver, opts.image, opts.file)
 	if err != nil {
 		return err
 	}

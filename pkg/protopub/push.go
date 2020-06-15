@@ -14,16 +14,18 @@ import (
 	"sync"
 )
 
+// PushFile pushes file `path` to the given `imageRef`
 func PushFile(ctx context.Context, statusW io.Writer, resolver remotes.Resolver, imageRef string, path string, files ...string) (*Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
-	return PushDescriptor(ctx, statusW, resolver, imageRef, file, files...)
+	return PushReader(ctx, statusW, resolver, imageRef, file, files...)
 }
 
-func PushDescriptor(ctx context.Context, statusW io.Writer, resolver remotes.Resolver, imageRef string, r io.Reader, files ...string) (*Image, error) {
+// PushReader pushes given io.Reader `r` to the given `imageRef`
+func PushReader(ctx context.Context, statusW io.Writer, resolver remotes.Resolver, imageRef string, r io.Reader, files ...string) (*Image, error) {
 	image, err := ImageFromReader(r)
 	if err != nil {
 		return nil, err

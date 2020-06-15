@@ -2,7 +2,6 @@ package protopub
 
 import (
 	v1 "github.com/freshapi/protopub/schema/v1"
-	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 	"io"
 	"io/ioutil"
 	"os"
@@ -12,16 +11,19 @@ import (
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
+// Image describes state of descriptor set in protopub
 type Image struct {
 	Config schema.Config
 	Files  []*descriptorpb.FileDescriptorProto
 }
 
+// ImageInfo describes useful information about Image which will be printed when running `inspect`
 type ImageInfo struct {
 	Config schema.Config `json:"config"`
 	Files  []*ImageFile  `json:"files"`
 }
 
+// ImageFile describes single file in ImageInfo
 type ImageFile struct {
 	Name              string   `json:"name"`
 	Syntax            string   `json:"syntax"`
@@ -33,7 +35,8 @@ type ImageFile struct {
 	HasSourceCodeInfo bool     `json:"hasSourceCodeInfo"`
 }
 
-func Info(image *Image, layers ...*ocispec.Descriptor) *ImageInfo {
+// Info creates ImageInfo from the Image
+func Info(image *Image) *ImageInfo {
 	info := ImageInfo{}
 	info.Config = image.Config
 
@@ -68,6 +71,7 @@ func Info(image *Image, layers ...*ocispec.Descriptor) *ImageInfo {
 	return &info
 }
 
+// ImageFromPath creates image from given file path
 func ImageFromPath(path string) (*Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -77,6 +81,7 @@ func ImageFromPath(path string) (*Image, error) {
 	return ImageFromReader(file)
 }
 
+// ImageFromReader creates image from given io.Reader
 func ImageFromReader(r io.Reader) (*Image, error) {
 	b, err := ioutil.ReadAll(r)
 	if err != nil {
@@ -90,12 +95,14 @@ func ImageFromReader(r io.Reader) (*Image, error) {
 	return ImageFromDescriptorSet(&fd)
 }
 
+// ImageFromDescriptorSet creates image from given descriptor set
 func ImageFromDescriptorSet(fd *descriptorpb.FileDescriptorSet) (*Image, error) {
 	image := Image{}
 	image.Files = fd.File
 	return &image, nil
 }
 
+// NewConfigFromFiles creates configuration object from proto files
 func NewConfigFromFiles(files []*descriptorpb.FileDescriptorProto) (schema.Config, error) {
 	config := v1.NewConfig()
 	var fileNames []string

@@ -16,7 +16,7 @@ type resolverOpts struct {
 	username  string
 	password  string
 	insecure  bool
-	plainHttp bool
+	plainHTTP bool
 	configs   []string
 }
 
@@ -25,14 +25,15 @@ func resolverOptions(flags *pflag.FlagSet) resolverOpts {
 	flags.StringVarP(&opts.username, "username", "u", "", "registry username")
 	flags.StringVarP(&opts.password, "password", "p", "", "registry password")
 	flags.BoolVar(&opts.insecure, "insecure", false, "skip registry TLS verification")
-	flags.BoolVar(&opts.plainHttp, "plain", false, "plain http registry")
+	flags.BoolVar(&opts.plainHTTP, "plain", false, "plain http registry")
 	flags.StringArrayVarP(&opts.configs, "config", "c", nil, "auth config path")
 	return opts
 }
 
+// Resolver creates OIC resolver which could be used to authenticate registry requests
 func Resolver(options resolverOpts) remotes.Resolver {
 	opts := docker.ResolverOptions{
-		PlainHTTP: options.plainHttp,
+		PlainHTTP: options.plainHTTP,
 	}
 
 	client := http.DefaultClient
@@ -55,7 +56,7 @@ func Resolver(options resolverOpts) remotes.Resolver {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "WARNING: Error loading auth file: %v\n", err)
 	}
-	resolver, err := cli.Resolver(context.Background(), client, options.plainHttp)
+	resolver, err := cli.Resolver(context.Background(), client, options.plainHTTP)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "WARNING: Error loading resolver: %v\n", err)
 		resolver = docker.NewResolver(opts)

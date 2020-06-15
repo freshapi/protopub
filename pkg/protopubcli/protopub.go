@@ -2,6 +2,7 @@ package protopubcli
 
 import "github.com/spf13/cobra"
 
+// NewProtopub creates root `protopub` command
 func NewProtopub() *cobra.Command {
 	protopub := cobra.Command{
 		Use:          "protopub [command]",

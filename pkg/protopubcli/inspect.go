@@ -16,6 +16,7 @@ type inspectOpts struct {
 	target string
 }
 
+// NewInspect creates `inspect` command
 func NewInspect() *cobra.Command {
 	var opts inspectOpts
 	inspect := cobra.Command{
